@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/data', dataRoutes);
+app.use(express.static('frontend'));
 
 app.get('/test-db', async (req, res) => {
     try {
