@@ -6,11 +6,13 @@ const db = require('./db/dbSingleton');
 const pool = db.getConnection();
 const app = express();
 const authRoutes = require('./routes/authRoutes');
+const dataRoutes = require('./routes/dataRoutes');
 const port = 3000;
 
 app.use(express.json());
 app.use(cors());
 app.use('/api/auth', authRoutes);
+app.use('/api/data', dataRoutes);
 
 app.get('/test-db', async (req, res) => {
     try {
