@@ -53,6 +53,11 @@ const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, thisUser[0].password);
 
         if (isMatch) {
+            req.session.user = {
+                id: thisUser[0].id,
+                username: thisUser[0].username,
+                role: thisUser[0].role
+            }
             res.status(200).json({
                 message: "Login success",
                 userId: thisUser[0].id,
@@ -66,5 +71,13 @@ const login = async (req, res) => {
     }
 };
 
-const authController = { register, login };
+const logout = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) return res.status(500).json({ message: "Could not log out" });
+        res.clearCookie('connect.sid');
+        res.status(200).json({ message: "Logout successful" });
+    })
+}
+
+const authController = { register, login, logout };
 module.exports = authController;

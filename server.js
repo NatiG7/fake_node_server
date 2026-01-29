@@ -1,39 +1,36 @@
 // Nati G.
 
+// nodeJs server
+require('dotenv').config;
 const express = require('express');
 const cors = require('cors');
-const db = require('./db/dbSingleton');
-const pool = db.getConnection();
+const session = require('express-session');
 const app = express();
 const authRoutes = require('./routes/authRoutes');
 const dataRoutes = require('./routes/dataRoutes');
+const pageGuard = require('./middleware/pageGuard');
 const port = 3000;
 
 app.use(express.json());
 app.use(cors());
-app.use('/api/auth', authRoutes);
-app.use('/api/data', dataRoutes);
+
+// session config
+app.use(session({
+    secret: process.env.SECRET_KEY || 'default_secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60,
+        httpOnly: true
+    }
+}))
+
+// page guard allows static only if auth
+app.use(pageGuard);
 app.use(express.static('frontend'));
 
-app.get('/test-db', async (req, res) => {
-    try {
-        const [rows] = await pool.query('SELECT 1 as result');
-
-        res.json({
-            status: 'success',
-            message: 'DB Connected',
-            test_res: rows[0].result
-        });
-    }
-    catch (error) {
-        console.error("Database Connection Failed:", error);
-        res.status(500).json({
-            status: 'error',
-            message: 'Failed to connect to DB',
-            error: error.message
-        });
-    }
-});
+app.use('/api/auth', authRoutes);
+app.use('/api/data', dataRoutes);
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
