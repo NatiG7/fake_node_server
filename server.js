@@ -9,6 +9,7 @@ const app = express();
 const authRoutes = require('./routes/authRoutes');
 const dataRoutes = require('./routes/dataRoutes');
 const pageGuard = require('./middleware/pageGuard');
+const {requestLogger} = require('./middleware/logger');
 const port = 3000;
 
 app.use(express.json());
@@ -24,6 +25,9 @@ app.use(session({
         httpOnly: true
     }
 }))
+
+// logging requests
+app.use(requestLogger);
 
 // page guard allows static only if auth
 app.use(pageGuard);
