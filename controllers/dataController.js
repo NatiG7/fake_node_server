@@ -30,6 +30,12 @@ const addAlert = async (req, res) => {
     if (!threat_type || !source_ip || !risk_score) {
         return res.status(400).json({ message: "Missing required fields" });
     }
+    if (!threat_type || threat_type.trim() === '') {
+        return res.status(400).json({ message: "Threat type cannot be empty" });
+    }
+    if (isNaN(risk_score) || risk_score < 0 || risk_score > 10) {
+        return res.status(400).json({ message: "Risk score must be a number between 0-10" });
+    }
 
     const insertQuery = "INSERT INTO mock_alerts (threat_type, source_ip, risk_score, status) VALUES (?, ?, ?, ?)";
     try {
