@@ -67,6 +67,10 @@ const login = async (req, res) => {
     }
 };
 
+/**
+ * Function: logout
+ * Description: Destroys the session and clears the cookie.
+ */
 const logout = (req, res) => {
     const username = req.session?.user?.username || 'Unknown';
     req.session.destroy((err) => {
