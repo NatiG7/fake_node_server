@@ -67,5 +67,5 @@ const deleteAlert = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
-module.exports = { getAllAlerts, addAlert, deleteAlert };
+const dataController ={ getAllAlerts, addAlert, deleteAlert };
+module.exports = dataController;

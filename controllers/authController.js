@@ -52,12 +52,14 @@ const login = async (req, res) => {
         if (isMatch) {
             const { password, ...cleanUser } = thisUser[0];
             req.session.user = cleanUser;
+            logEvent('AUTH', `User logged in: ${cleanUser.username}`);
             res.status(200).json({
                 message: "Login success.",
                 user: cleanUser
             })
         } else {
-            res.status(401).json({ message: "Incorrect password" });
+            logEvent('WARN', `Failed login attempt for: ${username}`);
+            res.status(401).json({ message: "Ivalid credentials" });
         }
     } catch (ex) {
         console.error("Login error: ", ex);
@@ -66,8 +68,10 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
+    const username = req.session?.user?.username || 'Unknown';
     req.session.destroy((err) => {
         if (err) return res.status(500).json({ message: "Could not log out" });
+        if (username !== 'Unknown') logEvent("AUTH",`User logged out: ${username}`);
         res.clearCookie('connect.sid');
         res.status(200).json({ message: "Logout successful" });
     })
