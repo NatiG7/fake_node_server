@@ -15,7 +15,10 @@ const getAllAlerts = async (req, res) => {
         if (result.length === 0) return res.status(200).json([]);
         res.status(200).json(result);
     }
-    catch (ex) { res.status(500).json({ error: ex.message }); }
+    catch (ex) {
+        console.error("Get alerts error : ", ex);
+        res.status(500).json({ message: "Internal server error" });
+    }
 }
 
 /**
@@ -40,10 +43,10 @@ const addAlert = async (req, res) => {
     const insertQuery = "INSERT INTO mock_alerts (threat_type, source_ip, risk_score, status) VALUES (?, ?, ?, ?)";
     try {
         const [result] = await pool.query(insertQuery, [threat_type, source_ip, risk_score, status || 'New']);
-        // Send back the ID so we can use it in the Frontend immediately
         res.status(201).json({ message: "Alert added", id: result.insertId });
     } catch (ex) {
-        res.status(500).json({ error: ex.message });
+        console.error("Add Alert Error:", ex);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
@@ -60,7 +63,8 @@ const deleteAlert = async (req, res) => {
         if (result.affectedRows === 0) return res.status(404).json({ message: "Alert not found" });
         res.status(200).json({ message: "Alert deleted successfully" });
     } catch (ex) {
-        res.status(500).json({ error: ex.message });
+        console.error("Delete Alert Error:", ex);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 };
 

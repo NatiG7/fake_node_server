@@ -3,7 +3,6 @@
 /**
  * Middleware: pageGuard
  * Description: Prevents direct access to HTML pages (Home/Manage) if the user is not logged in.
- * Note: This must run AFTER session middleware but BEFORE static files.
  */
 const pageGuard = (req, res, next) => {
     const protectedPages = ['/home.html', '/manage.html'];

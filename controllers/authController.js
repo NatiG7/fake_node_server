@@ -47,27 +47,23 @@ const login = async (req, res) => {
         const selectThisUserQuery = "SELECT * FROM users WHERE username = ?";
         const [thisUser] = await pool.query(selectThisUserQuery, [username]);
         if (thisUser.length === 0) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(401).json({ message: "Invalid credentials" });
         }
 
         const isMatch = await bcrypt.compare(password, thisUser[0].password);
-
         if (isMatch) {
-            req.session.user = {
-                id: thisUser[0].id,
-                username: thisUser[0].username,
-                role: thisUser[0].role
-            }
+            const {password, ...cleanUser} = thisUser[0];
+            req.session.user = cleanUser;
             res.status(200).json({
-                message: "Login success",
-                userId: thisUser[0].id,
-                username: thisUser[0].username
-            });
+                message: "Login success.",
+                user: cleanUser
+            })
         } else {
             res.status(401).json({ message: "Incorrect password" });
         }
     } catch (ex) {
-        res.status(500).json({ error: ex.message });
+        console.error("Login error: ", ex);
+        res.status(500).json({ message: "Internal server error." });
     }
 };
 
