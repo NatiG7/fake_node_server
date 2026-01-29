@@ -11,17 +11,14 @@ const pool = db.getConnection();
  */
 const register = async (req, res) => {
     const { username, password, full_name } = req.body;
-
     if (!username || !password || !full_name) {
         return res.status(400).send("Bad Input Please verify fields.");
     }
 
     const insertNewUserQuery = "INSERT INTO users (username, password, full_name) VALUES(?,?,?)";
-
     try {
         const hashedPwd = await bcrypt.hash(password, 10);
         const [result] = await pool.query(insertNewUserQuery, [username, hashedPwd, full_name]);
-
         res.status(201).json({
             message: "Registration success",
             userId: result.insertId
@@ -31,7 +28,8 @@ const register = async (req, res) => {
         if (ex.code === 'ER_DUP_ENTRY') {
             return res.status(409).json({ message: "User already exists" });
         }
-        res.status(500).json({ error: ex.message });
+        console.error("Register erro:", ex);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
@@ -52,7 +50,7 @@ const login = async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, thisUser[0].password);
         if (isMatch) {
-            const {password, ...cleanUser} = thisUser[0];
+            const { password, ...cleanUser } = thisUser[0];
             req.session.user = cleanUser;
             res.status(200).json({
                 message: "Login success.",
