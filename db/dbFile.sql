@@ -1,3 +1,4 @@
+-- Nati G.
 -- 1. Create Database
 CREATE DATABASE IF NOT EXISTS final_project_node;
 
@@ -7,55 +8,10 @@ USE final_project_node;
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL, -- In real app, hash this!
+    password VARCHAR(255) NOT NULL,
     full_name VARCHAR(100),
     role VARCHAR(20) DEFAULT 'user'
 );
-
--- Insert 5 Dummy Users (Requirement: >5 records)
-INSERT INTO
-    users (
-        username,
-        password,
-        full_name,
-        role
-    )
-VALUES (
-        'admin',
-        'admin123',
-        'System Admin',
-        'admin'
-    ),
-    (
-        'david',
-        '123456',
-        'David Cohen',
-        'analyst'
-    ),
-    (
-        'sarah',
-        'pass789',
-        'Sarah Levy',
-        'viewer'
-    ),
-    (
-        'yossi',
-        'qwerty',
-        'Yossi Ben',
-        'analyst'
-    ),
-    (
-        'student',
-        'pass123',
-        'Demo Student',
-        'user'
-    ),
-    (
-        'teacher',
-        'teach1',
-        'Code Teacher',
-        'admin'
-    );
 
 -- 3. Table 2: Project Data (Requirement: Topic related, String + Number)
 CREATE TABLE IF NOT EXISTS mock_alerts (

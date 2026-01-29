@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDS Security - Login</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header style="text-align: center;">
+        <h1>Network Security System</h1>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <h2 id="formTitle">Login</h2>
+            <form id="authForm">
+                <div class="form-group" id="nameGroup" style="display: none;">
+                    <label>Full Name</label>
+                    <input type="text" id="fullName" placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Enter username" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+
+                <button type="submit" id="submitBtn">Login</button>
+                
+                <div id="msgBox"></div>
+                
+                <p style="text-align: center; margin-top: 1rem;">
+                    <a href="#" id="toggleLink">Need an account? Register</a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Nati Goral</p>
+    </footer>
+
+    <script src="./js/auth.js"></script>
+</body>
+</html>

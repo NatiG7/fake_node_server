@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Alerts</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="manage.html" class="active">Manage Alerts</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Network Alert Log</h2>
+
+        <div class="form-card" style="max-width: 100%;">
+            <h3>Report New Threat</h3>
+            <form id="addAlertForm">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="threatType" placeholder="Threat Type (e.g. DDoS)" required style="flex: 1;">
+                    <input type="text" id="sourceIp" placeholder="Source IP" required style="flex: 1;">
+                    <input type="number" id="riskScore" placeholder="Risk Score (0-10)" step="0.1" required style="width: 100px;">
+                    <button type="submit" style="width: auto;">Add Alert</button>
+                </div>
+            </form>
+        </div>
+
+        <table id="alertsTable">
+            <thead>
+                <tr>
+                    <th onclick="sortBy('threat_type')">Threat Type &#8597;</th>
+                    <th onclick="sortBy('source_ip')">Source IP &#8597;</th>
+                    <th onclick="sortBy('risk_score')">Risk Score &#8597;</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Practical Engineering Project</p>
+    </footer>
+
+    <script src="./js/data.js"></script>
+</body>
+</html>

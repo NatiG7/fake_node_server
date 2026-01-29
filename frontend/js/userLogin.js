@@ -1,3 +1,0 @@
-const userLogin = (u,p) => {
-    
-};

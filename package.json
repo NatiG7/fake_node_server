@@ -2,8 +2,10 @@
   "name": "fake_node_server",
   "version": "1.0.0",
   "description": "Basic nodeJS server for displaying information and displaying API functionality",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "seed": "node scripts/seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,9 +21,10 @@
   "homepage": "https://github.com/NatiG7/fake_node_server#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "jsql": "^0.0.1-dev",
     "mysql2": "^3.16.0"
   }
 }
