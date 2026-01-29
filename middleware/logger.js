@@ -19,7 +19,9 @@ const logEvent = async (type, message) => {
  * Description: Logs incoming requests to Console (always) and DB (selective).
  */
 const requestLogger = (req, res, next) => {
-    console.log(`[WEB] ${req.method} ${req.url} from ${req.ip}`);
+    if (!req.url.startsWith('/css') && !req.url.startsWith('/js'))
+        console.log(`[WEB] ${req.method} ${req.url} from ${req.ip}`);
+    
     if (!req.url.startsWith('/css') && !req.url.startsWith('/js') && req.method !== 'GET') {
         const userId = req.session?.user?.id || 'Guest';
         logEvent('TRAFFIC', `Method: ${req.method}, URL: ${req.url}, UserID: ${userId}`);
