@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcrypt');
 const db = require('../db/dbSingleton');
+const {logEvent} = require('../middleware/logger');
 const pool = db.getConnection();
 
 /**
